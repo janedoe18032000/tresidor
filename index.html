@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min Webbsajt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav button.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .contact-form {
+            margin-top: 1.5rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><button onclick="showPage('home')" class="active" id="nav-home">Hem</button></li>
+            <li><button onclick="showPage('about')" id="nav-about">Om oss</button></li>
+            <li><button onclick="showPage('contact')" id="nav-contact">Kontakt</button></li>
+        </ul>
+    </nav>
+
+    <div id="home" class="page active">
+        <h1>Välkommen till vår webbsajt!</h1>
+        <p>Det här är startsidan där vi hälsar våra besökare välkomna.</p>
+        
+        <div class="card">
+            <h2>Vad vi erbjuder</h2>
+            <p>Vi erbjuder professionella tjänster inom webbutveckling, design och digital marknadsföring. Med vår expertis hjälper vi ditt företag att växa online.</p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-item">Design</div>
+            <div class="gallery-item">Utveckling</div>
+            <div class="gallery-item">Marknadsföring</div>
+        </div>
+    </div>
+
+    <div id="about" class="page">
+        <h1>Om oss</h1>
+        <p>Vi är ett dedikerat team som brinner för att skapa fantastiska webbupplevelser.</p>
+        
+        <div class="card">
+            <h2>Vår historia</h2>
+            <p>Grundat 2020, har vi hjälpt över 100 företag att förverkliga sina digitala drömmar. Vårt team består av erfarna utvecklare, designers och strategier.</p>
+        </div>
+
+        <div class="card">
+            <h2>Våra värderingar</h2>
+            <p>Kvalitet, innovation och kundnöjdhet står i centrum för allt vi gör. Vi tror på långsiktiga relationer och hållbara lösningar.</p>
+        </div>
+    </div>
+
+    <div id="contact" class="page">
+        <h1>Kontakta oss</h1>
+        <p>Har du frågor eller vill starta ett projekt? Hör av dig till oss!</p>
+        
+        <div class="contact-form">
+            <input type="text" placeholder="Ditt namn" id="name">
+            <input type="email" placeholder="Din e-post" id="email">
+            <textarea rows="5" placeholder="Ditt meddelande" id="message"></textarea>
+            <button onclick="submitForm()">Skicka meddelande</button>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            const navButtons = document.querySelectorAll('nav button');
+            
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            navButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+        }
+
+        function submitForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && message) {
+                alert('Tack för ditt meddelande, ' + name + '! Vi återkommer snart.');
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            } else {
+                alert('Vänligen fyll i alla fält.');
+            }
+        }
+    </script>
+</body>
+</html>
